@@ -1,6 +1,7 @@
 <%= render 'show' %>
 <% if current_user == @test.User %>
     <%= button_to 'Edit Test', edit_test_path(@test), method: :get %>
+    <%= button_to 'Add Question', new_test_question_path(@test), method: :get %>
     <ol type="1">
       <% @test.questions.each do |question| %>
           <li>
@@ -13,7 +14,7 @@
                     <div class="answer" id="<%= answer.id %>">
                       <li class="text-<%= answer[:correct] ? 'success' : 'danger' %>">
                         <%= raw(answer[:description]) %>
-                        <%= button_to "Edit answer", edit_test_question_answer_path(@test, question, answer), method: "get" %>
+                        <%= button_to 'Edit answer', edit_test_question_answer_path(@test, question, answer), method: "get" %>
                       </li>
                     </div>
                 <% end %>
