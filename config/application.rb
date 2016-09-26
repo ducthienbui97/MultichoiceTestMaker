@@ -21,6 +21,10 @@ module Multichoice
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.assets.precompile += Ckeditor.assets
+    config.assets.precompile += %w( ckeditor/* )
+    config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
+
     config.active_record.raise_in_transactional_callbacks = true
   end
 end
