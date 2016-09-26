@@ -1,0 +1,14 @@
+<% @test.questions.each do |question| %>
+    <% if get_result(question) %>
+        <div class="alert alert-success">
+          <%= raw (question.question_text) %>
+        </div>
+
+    <% else %>
+        <div class="alert alert-danger">
+          <%= raw (question.question_text) %>
+        </div>
+
+    <% end %>
+
+<% end %>

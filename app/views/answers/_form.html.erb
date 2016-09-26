@@ -1,0 +1,24 @@
+<%= form_for [@test,@question,@answer] do |f| %>
+  <% if @answer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@answer.errors.count, "error") %> prohibited this answer from being saved:</h2>
+
+      <ul>
+      <% @answer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <div class="field">
+      <%= f.label :description %><br/>
+      <%= f.cktext_area :description, :ckeditor => {:toolbar => 'mini'} %>
+    </div>
+    <div class="field">
+      <%= f.label :correct %><br/>
+      <%= f.check_box :correct %>
+    </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

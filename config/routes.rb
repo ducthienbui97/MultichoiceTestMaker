@@ -1,12 +1,24 @@
 Rails.application.routes.draw do
-  resources :submissions
-  resources :tests
+  mount Ckeditor::Engine => '/ckeditor'
+  resources :tests, except: [:index] do
+    resources :questions, except: [:index,:show] do
+      resources :answers, except: [:index,:show]
+    end
+    resources :submissions, except: [:index]
+    member do
+      get 'done'
+    end
+    collection do
+      get 'all'
+    end
+  end
+  resources :submissions, only: [:index]
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'tests#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
