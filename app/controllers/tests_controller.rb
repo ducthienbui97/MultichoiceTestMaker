@@ -100,12 +100,12 @@ class TestsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def test_params
-    params[:test][:User_id] = current_user[:id]
-    params.require(:test).permit(:User_id, :title, :description, :length)
+    params[:test][:user_id] = current_user[:id]
+    params.require(:test).permit(:user_id, :title, :description, :length)
   end
 
   def authority_check
-    if @test.User != current_user
+    if @test.user != current_user
       redirect_to @test, danger: 'You do not have the right to do this operation'
     end
   end

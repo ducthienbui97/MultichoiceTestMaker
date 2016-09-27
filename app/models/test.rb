@@ -1,5 +1,5 @@
 class Test < ActiveRecord::Base
-  belongs_to :User
+  belongs_to :user
   has_many :questions, dependent: :destroy
   has_many :submissions, dependent: :destroy
   validates :description, presence: true

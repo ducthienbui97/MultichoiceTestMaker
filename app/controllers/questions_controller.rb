@@ -61,7 +61,7 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:point, :question_text)
   end
   def authority_check
-    if @test.User != current_user
+    if @test.user != current_user
       redirect_to @test, danger: 'You do not have the right to do this operation'
     end
   end

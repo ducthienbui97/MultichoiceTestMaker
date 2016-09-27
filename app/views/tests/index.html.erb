@@ -14,7 +14,7 @@
   <tbody>
     <% @tests.each do |test| %>
       <tr>
-        <td><%= test.User.name %></td>
+        <td><%= test.user.name %></td>
         <td><%= test.title %></td>
         <td><%= test.length %></td>
         <td><%=	link_to 'Take the test',new_test_submission_path(test) %></td>

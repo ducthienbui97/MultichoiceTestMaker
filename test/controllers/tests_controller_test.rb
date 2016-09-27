@@ -18,7 +18,7 @@ class TestsControllerTest < ActionController::TestCase
 
   test "should create test" do
     assert_difference('Test.count') do
-      post :create, test: { User_id: @test.User_id, description: @test.description, length: @test.length, title: @test.title }
+      post :create, test: {user_id: @test.user_id, description: @test.description, length: @test.length, title: @test.title}
     end
 
     assert_redirected_to test_path(assigns(:test))
@@ -35,7 +35,7 @@ class TestsControllerTest < ActionController::TestCase
   end
 
   test "should update test" do
-    patch :update, id: @test, test: { User_id: @test.User_id, description: @test.description, length: @test.length, title: @test.title }
+    patch :update, id: @test, test: {user_id: @test.user_id, description: @test.description, length: @test.length, title: @test.title}
     assert_redirected_to test_path(assigns(:test))
   end
 

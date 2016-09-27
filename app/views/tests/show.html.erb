@@ -1,5 +1,5 @@
 <%= render 'show' %>
-<% if current_user == @test.User %>
+<% if current_user == @test.user %>
     <%= button_to 'Edit Test', edit_test_path(@test), method: :get %>
     <%= button_to 'Add Question', new_test_question_path(@test), method: :get %>
     <ol type="1">
