@@ -3,8 +3,6 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: [:edit, :update, :destroy]
   before_action :set_test
   before_action :authority_check
-
-
   # GET /questions/new
   def new
     @question = @test.questions.build
@@ -51,7 +49,7 @@ class QuestionsController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_test
-    @test = Test.find(params[:test_id])
+    @test = Test.find_by(token: params[:test_token])
   end
 
   def set_question
@@ -60,7 +58,6 @@ class QuestionsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def question_params
-    params[:question][:point] = 1
     params.require(:question).permit(:point, :question_text)
   end
   def authority_check
@@ -68,4 +65,5 @@ class QuestionsController < ApplicationController
       redirect_to @test, danger: 'You do not have the right to do this operation'
     end
   end
+
 end

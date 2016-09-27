@@ -63,7 +63,7 @@ class AnswersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_test
-    @test = Test.find(params[:test_id])
+    @test = Test.find_by(token: params[:test_token])
   end
 
   def set_question

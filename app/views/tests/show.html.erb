@@ -19,11 +19,16 @@
                     </div>
                 <% end %>
               </ol>
-
             </div>
           </li>
       <% end %>
     </ol>
-    <%= button_to "Done", done_test_path(@test), method: "get" %>
+    <%= button_to "Done", done_test_path(@test), method: 'patch' %>
+    <% if @test.public.blank? %>
+        <%= link_to raw("#{icon('globe', class: 'fa-2x btn')}#{icon('lock', class: 'fa-2x btn active')}"), flip_test_path(@test), method: :patch, remote: true %>
+    <% else %>
+        <%= link_to raw("#{icon('globe', class: 'fa-2x btn active')}#{icon('lock', class: 'fa-2x btn')}"), flip_test_path(@test), method: :patch, remote: true %>
+
+    <% end %>
 <% end %>
 

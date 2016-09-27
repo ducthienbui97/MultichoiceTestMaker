@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160926143141) do
+ActiveRecord::Schema.define(version: 20160927122604) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id"
@@ -36,6 +36,17 @@ ActiveRecord::Schema.define(version: 20160926143141) do
   add_index "answers_of_questions", ["question_id"], name: "index_answers_of_questions_on_question_id"
   add_index "answers_of_questions", ["submission_id"], name: "index_answers_of_questions_on_submission_id"
 
+  create_table "question_evaluations", force: :cascade do |t|
+    t.integer "submission_id"
+    t.integer "question_id"
+    t.boolean "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "question_evaluations", ["question_id"], name: "index_question_evaluations_on_question_id"
+  add_index "question_evaluations", ["submission_id"], name: "index_question_evaluations_on_submission_id"
+
   create_table "questions", force: :cascade do |t|
     t.text     "question_text",             null: false
     t.integer  "test_id"
@@ -51,6 +62,8 @@ ActiveRecord::Schema.define(version: 20160926143141) do
     t.integer  "test_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "point", default: 0
+    t.boolean "evaluated"
   end
 
   add_index "submissions", ["test_id"], name: "index_submissions_on_test_id"
@@ -65,6 +78,8 @@ ActiveRecord::Schema.define(version: 20160926143141) do
     t.datetime "updated_at",               null: false
     t.boolean  "public"
     t.boolean  "done"
+    t.integer "point", default: 0
+    t.string "token"
   end
 
   add_index "tests", ["User_id"], name: "index_tests_on_User_id"

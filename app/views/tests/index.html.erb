@@ -6,7 +6,6 @@
     <tr>
       <th>User</th>
       <th>Title</th>
-      <th>Description</th>
       <th>Length</th>
       <th colspan="3"></th>
     </tr>
@@ -17,7 +16,6 @@
       <tr>
         <td><%= test.User.name %></td>
         <td><%= test.title %></td>
-        <td><%= test.description %></td>
         <td><%= test.length %></td>
         <td><%=	link_to 'Take the test',new_test_submission_path(test) %></td>
       </tr>
