@@ -56,13 +56,13 @@ class SubmissionsController < ApplicationController
       end
       return
     end
-    too_late = Time.now > @timeout + 2.seconds
-    unless too_late
+
+    unless Time.now > @timeout + 5.seconds
       @submission.answers_of_questions.each do |user_answer|
         user_answer.update(choice: submission_params.fetch(user_answer.answer_id.to_s, "false"))
       end
     end
-    if too_late || params[:evaluate]
+    if Time.now > @timeout || params[:evaluate]
       @test.questions.each do |question|
         crrct = get_result(question)
         @submission.increment!(:point, question.point) if crrct

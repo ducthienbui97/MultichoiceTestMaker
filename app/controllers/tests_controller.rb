@@ -60,7 +60,6 @@ class TestsController < ApplicationController
   # POST /tests.json
   def create
     @test = Test.new(test_params)
-    p @test
     respond_to do |format|
       if @test.save
         format.html { redirect_to @test, success: 'Test was successfully created.' }
