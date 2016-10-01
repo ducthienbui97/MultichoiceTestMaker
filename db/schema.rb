@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20160927122604) do
   add_index "submissions", ["user_id"], name: "index_submissions_on_user_id"
 
   create_table "tests", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "User_id"
     t.string   "title",                    null: false
     t.text     "description", default: "", null: false
     t.integer  "length",                   null: false
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20160927122604) do
     t.string "token"
   end
 
-  add_index "tests", ["user_id"], name: "index_tests_on_user_id"
+  add_index "tests", ["User_id"], name: "index_tests_on_User_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

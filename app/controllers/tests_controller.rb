@@ -9,7 +9,6 @@ class TestsController < ApplicationController
   end
 
   def flip
-    p @test
     if @test.update(public: @test.public.blank?)
       respond_to do |format|
         format.js
