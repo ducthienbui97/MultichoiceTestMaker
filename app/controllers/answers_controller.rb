@@ -63,7 +63,7 @@ class AnswersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_test
-    @test = Test.find(params[:test_id])
+    @test = Test.find_by(token: params[:test_token])
   end
 
   def set_question
@@ -74,7 +74,7 @@ class AnswersController < ApplicationController
 
 
   def authority_check
-    if @test.User != current_user
+    if @test.user != current_user
       redirect_to @test, danger: 'You do not have the right to do this operation'
     end
   end

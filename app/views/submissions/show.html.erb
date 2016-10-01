@@ -1,14 +1,13 @@
-<% @test.questions.each do |question| %>
-    <% if get_result(question) %>
-        <div class="alert alert-success">
-          <%= raw (question.question_text) %>
-        </div>
-
-    <% else %>
-        <div class="alert alert-danger">
-          <%= raw (question.question_text) %>
-        </div>
-
-    <% end %>
-
-<% end %>
+<%= @submission.point %> / <%= @test.point %>
+<ol type="1">
+  <% @submission.question_evaluations.each do |qe| %>
+      <li>
+        <% if qe.value %>
+            <% _class = "alert alert-success" %>
+        <% else %>
+            <% _class = "alert alert-danger" %>
+        <% end %>
+        <div class='<%= _class %>'><%= raw(qe.question.question_text) %></div>
+      </li>
+  <% end %>
+</ol>

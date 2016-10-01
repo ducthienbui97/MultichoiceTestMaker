@@ -1,19 +1,32 @@
 class TestsController < ApplicationController
-  before_action :set_test, only: [:show, :edit, :update, :destroy, :done]
+  before_action :set_test, only: [:show, :edit, :update, :destroy, :done, :flip]
   before_action :authenticate_user!, except: [:index]
-  before_action :authority_check, only: [:show, :edit, :update, :destroy, :done]
+  before_action :authority_check, only: [:show, :edit, :update, :destroy, :done, :flip]
   # GET /tests
   # GET /tests.json
   def index
-    @tests = Test.where(done: true)
+    @tests = Test.where(done: true).where(public: true)
+  end
+
+  def flip
+    if @test.update(public: @test.public.blank?)
+      respond_to do |format|
+        format.js
+      end
+    end
   end
 
   #GET /tests/all
   def all
-
   end
-  # GET /tests/1/done
+
+  # PATCH /tests/1/done
   def done
+    unless @test.questions.size > 0
+      redirect_to @test, danger: 'The test has to have at least one question'
+      @test.update(done: false)
+      return
+    end
     @test.questions.each do |question|
       has_correct_answer = false
       question.answers.each do |answer|
@@ -21,13 +34,14 @@ class TestsController < ApplicationController
       end
       if !has_correct_answer
         redirect_to @test, danger: 'Each question has to have at least one correct answer'
-        @test.update(done: true)
+        @test.update(done: false)
         return
       end
     end
     @test.update(done: true)
-    redirect_to @test, success: "Done!"
+    redirect_to all_tests_path, success: "Done!"
   end
+
   # GET /tests/1
   # GET /tests/1.json
   def show
@@ -46,6 +60,7 @@ class TestsController < ApplicationController
   # POST /tests.json
   def create
     @test = Test.new(test_params)
+    p @test
     respond_to do |format|
       if @test.save
         format.html { redirect_to @test, success: 'Test was successfully created.' }
@@ -72,25 +87,25 @@ class TestsController < ApplicationController
   def destroy
     @test.destroy
     respond_to do |format|
-      format.html { redirect_to tests_url, success: 'Test was successfully destroyed.' }
+      format.html { redirect_to all_tests_path, success: 'Test was successfully destroyed.' }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_test
-      @test = Test.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_test
+    @test = Test.find_by(token: params[:token])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def test_params
-        params[:test][:User_id] = current_user[:id]
-        params.require(:test).permit(:User_id, :title, :description, :length)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def test_params
+    params[:test][:user_id] = current_user[:id]
+    params.require(:test).permit(:user_id, :title, :description, :length)
+  end
 
-    def authority_check
-      if @test.User != current_user
-        redirect_to @test, danger: 'You do not have the right to do this operation'
-      end
+  def authority_check
+    if @test.user != current_user
+      redirect_to @test, danger: 'You do not have the right to do this operation'
     end
+  end
 end

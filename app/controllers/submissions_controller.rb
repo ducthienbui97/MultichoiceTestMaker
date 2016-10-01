@@ -1,8 +1,11 @@
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update, :destroy]
   before_action :set_test, except: [:index]
+  before_action :set_time, only: [:edit, :update]
   before_action :authenticate_user!
   helper_method :get_result
+  helper_method :get_user_answer
+
   # GET /submissions
   # GET /submissions.json
   def index
@@ -29,7 +32,6 @@ class SubmissionsController < ApplicationController
     params[:submission] = {}
     params[:submission][:user_id] = current_user.id
     @submission = @test.submissions.create(submission_params)
-
     respond_to do |format|
       if @submission.save
         @test.questions.each do |question|
@@ -37,23 +39,46 @@ class SubmissionsController < ApplicationController
             answer.answers_of_questions.create({choice: false, question_id: question.id, submission_id: @submission.id})
           end
         end
-        format.html { redirect_to edit_test_submission_path(@test, @submission), info: @submission.created_at + @test.length.minutes }
+        format.html { redirect_to edit_test_submission_path(@test, @submission) }
       else
         format.html { render :new }
       end
     end
   end
 
+
   # PATCH/PUT /submissions/1
   # PATCH/PUT /submissions/1.json
   def update
-    @submission.answers_of_questions.each do |user_answer|
-      user_answer.update(choice: submission_params.fetch(user_answer.answer_id.to_s, "false"))
+    unless @submission.evaluated.blank?
+      respond_to do |format|
+        format.html { redirect_to test_submission_path(@test, @submission), info: "Evaluated!" }
+      end
+      return
     end
-    respond_to do |format|
-      if format.html { redirect_to test_submission_path(@test, @submission), success: 'Submission was successfully updated.' }
+    too_late = Time.now > @timeout + 2.seconds
+    unless too_late
+      @submission.answers_of_questions.each do |user_answer|
+        user_answer.update(choice: submission_params.fetch(user_answer.answer_id.to_s, "false"))
       end
     end
+    if too_late || params[:evaluate]
+      @test.questions.each do |question|
+        crrct = get_result(question)
+        @submission.increment!(:point, question.point) if crrct
+        @submission.question_evaluations.create({question_id: question.id, value: crrct})
+      end
+
+      @submission.answers_of_questions.all.destroy_all
+      respond_to do |format|
+        format.html { redirect_to test_submission_path(@test, @submission) }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to submissions_path, success: 'Submission was successfully saved.' }
+      end
+    end
+
   end
 
   # DELETE /submissions/1
@@ -66,14 +91,19 @@ class SubmissionsController < ApplicationController
     end
   end
 
+  def get_user_answer answer_id
+    @submission.answers_of_questions.find_by(answer_id: answer_id).choice
+  end
+
   def get_result question
     question.answers.each do |answer|
-      if answer.correct != @submission.answers_of_questions.find_by(answer_id: answer.id).choice
+      if answer.correct != get_user_answer(answer.id)
         return false
       end
     end
-    return  true
+    return true
   end
+
 
   private
   # Use callbacks to share common setup or constraints between actions.
@@ -82,11 +112,15 @@ class SubmissionsController < ApplicationController
   end
 
   def set_test
-    @test = Test.find(params[:test_id])
+    @test = Test.find_by(token: params[:test_token])
   end
 
+  def set_time
+    @timeout = @submission.created_at + @test.length.minutes
+  end
   # Never trust parameters from the scary internet, only allow the white list through.
   def submission_params
+    params[:submission] ||= {lazy: true}
     params.require(:submission).permit!
   end
 end

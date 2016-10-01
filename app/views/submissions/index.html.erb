@@ -10,7 +10,8 @@
   <tbody>
     <% @submissions.each do |submission| %>
       <tr>
-        <td><%= link_to 'Show', test_submission_path(submission.test,submission) %></td>
+        <td><%= submission.test.title %></td>
+        <td><%= link_to 'Continue', edit_test_submission_path(submission.test, submission) %></td>
 
       </tr>
     <% end %>

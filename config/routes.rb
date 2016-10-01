@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
-  resources :tests, except: [:index] do
+  resources :tests, except: [:index], param: :token do
     resources :questions, except: [:index,:show] do
       resources :answers, except: [:index,:show]
     end
-    resources :submissions, except: [:index]
+    resources :submissions, except: [:index] do
+    end
     member do
-      get 'done'
+      patch 'done'
+      patch 'flip'
     end
     collection do
       get 'all'

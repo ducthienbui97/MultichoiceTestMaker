@@ -4,9 +4,7 @@
 <table>
   <thead>
   <tr>
-    <th>User</th>
     <th>Title</th>
-    <th>Description</th>
     <th>Length</th>
     <th colspan="3"></th>
   </tr>
@@ -15,12 +13,9 @@
   <tbody>
   <% current_user.tests.each do |test| %>
       <tr>
-        <td><%= test.User %></td>
         <td><%= test.title %></td>
-        <td><%= test.description %></td>
         <td><%= test.length %></td>
         <td><%= link_to 'Show', test %></td>
-        <td><%= link_to 'Edit', edit_test_path(test) %></td>
         <td><%= link_to 'Destroy', test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
   <% end %>
