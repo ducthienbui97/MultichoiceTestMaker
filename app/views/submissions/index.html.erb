@@ -1,20 +1,17 @@
 <h1>Listing Submissions</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
+<table class="table table-striped">
   <tbody>
-    <% @submissions.each do |submission| %>
+  <% @submissions.each do |submission| %>
       <tr>
         <td><%= submission.test.title %></td>
-        <td><%= link_to 'Continue', edit_test_submission_path(submission.test, submission) %></td>
-
+        <% if submission.evaluated.blank? %>
+            <td><%= link_to 'Continue', edit_test_submission_path(submission.test, submission) %></td>
+        <% else %>
+            <td><%= "#{submission.point}/#{submission.test.point}" %></td>
+        <% end %>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 

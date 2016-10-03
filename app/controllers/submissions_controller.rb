@@ -68,7 +68,7 @@ class SubmissionsController < ApplicationController
         @submission.increment!(:point, question.point) if crrct
         @submission.question_evaluations.create({question_id: question.id, value: crrct})
       end
-
+      @submission.update(evaluated: true)
       @submission.answers_of_questions.all.destroy_all
       respond_to do |format|
         format.html { redirect_to test_submission_path(@test, @submission) }
