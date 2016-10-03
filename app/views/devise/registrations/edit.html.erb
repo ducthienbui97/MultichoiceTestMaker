@@ -1,36 +1,49 @@
-<h2>Change Password</h2>
-<%= current_user.name %>
-<%= current_user.email %>
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+<div class="row">
+  <h2 class="col-sm-offset-3 col-sm-9">Change Password</h2>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {method: :put, class: 'form-horizontal'}) do |f| %>
+      <%= devise_error_messages! %>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Email Adress</label>
+        <div class="col-sm-6">  <%= current_user.email %></div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Name</label>
+        <div class="col-sm-6"><%= current_user.name %></div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password, class: 'control-label col-sm-3' %>
+        <div class="col-sm-6">
+          <%= f.password_field :password, autocomplete: "off", placeholder: "New password", class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation, class: 'control-label col-sm-3' %>
+        <div class="col-sm-6">
+          <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Confirm new password", class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :current_password, class: 'control-label col-sm-3' %>
+        <div class="col-sm-6">
+          <%= f.password_field :current_password, autocomplete: "off", placeholder: "Current password", class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-3">
+          <%= f.submit "Update password", class: 'btn btn-lg btn-primary btn-block' %>
+
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-3">
+          <%= button_to "Delete my account", registration_path(resource_name), data: {confirm: "Are you sure?"}, method: :delete, class: 'btn btn-lg btn-danger btn-block' %>
+        </div>
+      </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <br />
-    <%= f.password_field :password, autocomplete: "off" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update my account" %>
-  </div>
-<% end %>
-<p><%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-<p><%= button_to "My Tests", all_tests_path, method: :get %></p>
-<p><%= button_to "My Submissions", submissions_path, method: :get %></p>
+</div>

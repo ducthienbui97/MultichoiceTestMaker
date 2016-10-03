@@ -1,7 +1,7 @@
 
 <h1>Listing Tests</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
   <tr>
     <th>Title</th>
@@ -14,9 +14,8 @@
   <% current_user.tests.each do |test| %>
       <tr>
         <td><%= test.title %></td>
-        <td><%= test.length %></td>
+        <td><%= pluralize(test.length, 'minute') %></td>
         <td><%= link_to 'Show', test %></td>
-        <td><%= link_to 'Destroy', test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
   <% end %>
   </tbody>

@@ -7,6 +7,7 @@ gem 'rails', '4.2.4'
 gem 'sqlite3', group: :development # Added development group.
 gem 'pg', group: :production # Added postgres and made it production only.
 gem 'rails_12factor', group: :production
+gem 'puma', group: :production
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

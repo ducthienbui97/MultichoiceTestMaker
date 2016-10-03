@@ -17,18 +17,3 @@
 a:visited, a:hover {
     text-decoration: none;
 }
-
-.fa.btn {
-    text-shadow: 1px 1px 1px #ccc;
-    border: black 1px solid;
-}
-
-.fa.btn.fa-globe {
-    border-radius: 10px 0px 0px 10px;
-    border-right: transparent;
-}
-
-.fa.btn.fa-lock {
-    border-radius: 0px 10px 10px 0px;
-    border-left: transparent;
-}

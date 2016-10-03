@@ -1,10 +1,8 @@
-
-<h1>Listing Tests</h1>
-
-<table>
+<h1>Public Tests</h1>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>User</th>
+      <th>Creator</th>
       <th>Title</th>
       <th>Length</th>
       <th colspan="3"></th>
@@ -16,13 +14,9 @@
       <tr>
         <td><%= test.user.name %></td>
         <td><%= test.title %></td>
-        <td><%= test.length %></td>
+        <td><%= pluralize(test.length, 'minute') %></td>
         <td><%=	link_to 'Take the test',new_test_submission_path(test) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Test', new_test_path %>
