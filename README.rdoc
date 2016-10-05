@@ -1,28 +1,15 @@
 == README
+---
+This project is a website that allows users to create multichoice tests and share them.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+There are 2 types of test, public tests which are available on home page and private tests which is only accessable via link.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Ruby version: 2.2
+* Rails version: 4.2
+* Deployment instructions:
+  - Download the project
+  - Open terminal/cmd inside project directory
+  - run command <tt> bundle install </tt> to install gems that required
+  - run command <tt> rake migrate </tt> to migrate database
+  - run command <tt> rails server </tt> to start server
+* Demo website: https://agile-hollows-29849.herokuapp.com/
