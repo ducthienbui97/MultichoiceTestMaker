@@ -2,7 +2,7 @@ class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update, :destroy]
   before_action :set_test, except: [:index]
   before_action :set_time, only: [:edit, :update]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:new]
   helper_method :get_result
   helper_method :get_user_answer
 
@@ -29,6 +29,10 @@ class SubmissionsController < ApplicationController
   # POST /submissions
   # POST /submissions.json
   def create
+    if @test.done.blank?
+      redirect_to root_path, warning: "This test have not finished yet"
+      return
+    end
     params[:submission] = {}
     params[:submission][:user_id] = current_user.id
     @submission = @test.submissions.create(submission_params)

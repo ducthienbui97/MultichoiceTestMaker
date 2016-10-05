@@ -44,13 +44,14 @@
           <%= link_to raw(icon('trash-o')), @test, method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %>
         </div>
       </div>
+      <div class="input-group col-sm-4">
+        <input readonly id="submissionLink" value="<%= new_test_submission_url(@test) %>" class="form-control ">
+        <span class="input-group-addon" data-clipboard-target="#submissionLink">
+          <%= icon('clipboard') %>
+        </span>
+      </div>
   <% end %>
-  <div class="input-group col-sm-4">
-    <input readonly id="submissionLink" value="<%= new_test_submission_url(@test) %>" class="form-control ">
-    <span class="input-group-addon" data-clipboard-target="#submissionLink">
-      <%= icon('clipboard') %>
-    </span>
-  </div>
+
 </div>
 <script>
   new Clipboard('.btn');

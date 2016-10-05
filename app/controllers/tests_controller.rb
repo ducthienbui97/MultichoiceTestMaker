@@ -104,7 +104,7 @@ class TestsController < ApplicationController
 
   def authority_check
     if @test.user != current_user
-      redirect_to @test, danger: 'You do not have the right to do this operation'
+      redirect_to root_path, danger: 'You do not have the right to modify this test'
     end
   end
 end
