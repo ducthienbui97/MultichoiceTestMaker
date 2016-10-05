@@ -15,4 +15,7 @@
 /log/*
 !/log/.keep
 /tmp
-/.idea
+
+.idea
+doc/
+.idea/workspace.xml
