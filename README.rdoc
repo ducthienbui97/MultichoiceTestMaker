@@ -1,5 +1,6 @@
-== README
+= README
 ---
+== About
 This project is a website that allows users to create multichoice tests and share them.
 
 There are 2 types of test, public tests which are available on home page and private tests which is only accessable via link.
@@ -12,4 +13,16 @@ There are 2 types of test, public tests which are available on home page and pri
   - run command <tt> bundle install </tt> to install gems that required
   - run command <tt> rake migrate </tt> to migrate database
   - run command <tt> rails server </tt> to start server
-* Demo website: https://agile-hollows-29849.herokuapp.com/
+* {Demo website}[https://agile-hollows-29849.herokuapp.com/]
+---
+== Credits
+This application uses Open Source components. You can find these projects below.
+
+* {Ruby on Rails}[https://github.com/rails/rails]
+* jQuery[https://github.com/jquery/jquery]
+* Bootstrap[https://github.com/twbs/bootstrap-sass]
+* Devise[https://github.com/plataformatec/devise]
+* Ckeditor[https://github.com/galetahub/ckeditor]
+* Flipclock.js[http://flipclockjs.com/]
+* Clipboard.js[https://github.com/zenorocha/clipboard.js/]
+
