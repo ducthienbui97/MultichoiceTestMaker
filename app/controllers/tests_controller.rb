@@ -43,7 +43,6 @@ class TestsController < ApplicationController
   end
 
   # GET /tests/1
-  # GET /tests/1.json
   def show
   end
 

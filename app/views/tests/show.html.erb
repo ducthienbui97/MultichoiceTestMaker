@@ -7,19 +7,19 @@
           <%= button_to 'Edit Test', edit_test_path(@test), method: :get, class: 'btn btn-default' %>
         </div>
         <div class="col-sm-3">
-          <%= button_to 'Add Question', new_test_question_path(@test), method: :get, class: 'btn btn-default' %>
+          <%= button_to 'Add Question', new_test_question_path(@test),remote: true, method: :get, class: 'btn btn-default' %>
         </div>
         <div class="col-sm-6">
         </div>
         <div class="col-sm-12">
-          <ol type="1">
+          <ol id="all-questions" type="1">
             <% @test.questions.each do |question| %>
                 <li>
-                  <div class="question" id="<%= question.id %> ">
+                  <div class="question">
                     <%= raw(question[:question_text]) %>
                     <%= link_to 'Edit question', edit_test_question_path(@test, question), method: "get", class: 'btn btn-default' %>
-                    <%= link_to "Add Answer", new_test_question_answer_path(@test, question), method: "get", class: 'btn btn-default' %>
-                    <ol type="A">
+                    <%= link_to "Add Answer", new_test_question_answer_path(@test, question), method: "get", remote: true, class: 'btn btn-default' %>
+                    <ol type="A" id="question_<%= question.id %>" >
                       <% question.answers.each do |answer| %>
                           <div class="answer" id="<%= answer.id %>">
                             <li class="text-<%= answer[:correct] ? 'success' : 'danger' %>">
