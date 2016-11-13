@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multichoice</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <script type="text/javascript" async
+          src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Thien Bui">
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <%= link_to "Multichoice", root_path, class: 'navbar-brand' %>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <% if user_signed_in? %>
+              <li>
+                <%= link_to(current_user.name, edit_user_registration_path(current_user)) %>
+              </li>
+              <li>
+                <%= link_to('My Tests', all_tests_path) %>
+              </li>
+              <li>
+                <%= link_to('My Submissions', submissions_path) %>
+              </li>
+              <li>
+                <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+              </li>
+          <% else %>
+              <li>
+                <%= link_to('Login', new_user_session_path) %>
+              </li>
+              <li>
+                <%= link_to('Sign up', new_user_registration_path) %>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="container">
+  <% [:success, :warning, :danger, :info, :error, :notice, :alert].each do |key| %>
+      <% if flash.key? key %>
+          <div class="alert alert-<%= key %>"><%= flash[key] %></div>
+      <% end %>
+  <% end %>
+  <%= yield %>
+</div>
+</body>
+</html>

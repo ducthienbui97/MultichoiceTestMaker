@@ -1,0 +1,20 @@
+<div>
+  <div class="form-group">
+    <strong>Test setter</strong>
+    <%= @test.user[:name] %>
+  </div>
+  <div class="form-group">
+    <strong>Title:</strong>
+    <%= @test.title %>
+  </div>
+
+  <div class="form-group">
+    <strong>Description:</strong>
+    <%= raw(@test.description) %>
+  </div>
+
+  <div class="form-group">
+    <strong>Length:</strong>
+    <%= pluralize(@test.length, 'minute') %>
+  </div>
+</div>

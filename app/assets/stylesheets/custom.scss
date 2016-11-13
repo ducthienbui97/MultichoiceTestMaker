@@ -1,0 +1,16 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+
+.alert-error {
+  @extend .alert-danger
+}
+
+.alert-notice {
+  @extend .alert-info
+}
+
+.alert-alert {
+  @extend .alert-warning
+}

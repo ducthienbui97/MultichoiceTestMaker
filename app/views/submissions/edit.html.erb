@@ -1,0 +1,28 @@
+<div class="your-clock"></div>
+<h1><%= @test.title %></h1>
+<%= form_tag(test_submission_path(@test, @submission), method: :put, id: 'test') do %>
+    <ol type="1">
+      <% @test.questions.each do |question| %>
+          <li><%= raw(question.question_text) %>
+            <ol type="A">
+              <% question.answers.each do |answer| %>
+                  <li>
+                    <%= check_box_tag "submission[#{answer.id}]", true, get_user_answer(answer.id) %> <%= raw(answer.description) %>
+                  </li>
+              <% end %>
+            </ol>
+          </li>
+      <% end %>
+    </ol>
+    <%= submit_tag %>
+    <%= submit_tag 'Evaluate', name: :evaluate %>
+<% end %>
+<script type="text/javascript">
+  var clock = $('.your-clock').FlipClock(<%=@timeout - Time.now%>, {
+    countdown: true,
+    clockFace: 'MinuteCounter'
+  });
+  setTimeout(function () {
+    $('#test').submit();
+  }, <%= (@timeout - Time.now)*1000 %>);
+</script>

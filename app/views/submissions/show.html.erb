@@ -1,0 +1,13 @@
+<%= @submission.point %> / <%= @test.point %>
+<ol type="1">
+  <% @submission.question_evaluations.each do |qe| %>
+      <li>
+        <% if qe.value %>
+            <% _class = "alert alert-success" %>
+        <% else %>
+            <% _class = "alert alert-danger" %>
+        <% end %>
+        <div class='<%= _class %>'><%= raw(qe.question.question_text) %></div>
+      </li>
+  <% end %>
+</ol>
